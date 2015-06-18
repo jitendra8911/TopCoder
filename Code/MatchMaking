@@ -1,0 +1,97 @@
+public class MatchMaking
+{
+	public String makeMatch(String[] namesWomen,String[] answersWomen,String[] namesMen,String[] answersMen,String queryWoman)
+	{
+		// add namesWomen to treeMapWomen
+		TreeMap<String,String> treeMapWomen=new TreeMap<String,String>();
+		addNamesToTreeMap(treeMapWomen,namesWomen,answersWomen);
+		
+		// add namesMen to treeMapMen;
+		TreeMap<String,String> treeMapMen=new TreeMap<String,String>();
+		addNamesToTreeMap(treeMapMen,namesMen,answersMen);
+		
+		
+		// retrieve each woman in lexicographical order and check for queryWoman	
+		Set set=treeMapWomen.entrySet();
+		Iterator iterator=set.iterator();
+		String matchMan="";
+		while(iterator.hasNext())
+		{
+			Map.Entry entry=(Map.Entry) iterator.next();
+			String womanName=entry.getKey();
+			String womanAnswers=entry.getValue();
+			matchMan=findBestMatch(womanName,womanAnswers,treeMapMen);
+			if(womanName.equals(queryWoman)) 
+				return matchMan;
+		}
+		return matchMan;
+		
+	}
+	
+	public void addNamesToTreeMap(TreeMap<String,String> map,String[] names,String[] answers)
+	{
+		
+		while(i=0;i<names.length)
+		{
+			map.put(names[i],answers[i]);
+		}
+	}
+	
+	public String findBestMatch(String womanName,String womanAnswers,TreeMap<String,String> map)
+	{
+		TreeMap<String,String> treeMapMen=map;
+	  	Set set=treeMapMen.entrySet();
+		Iterator iterator=set.iterator();
+		TreeMap<Integer,ArrayList<String>> menMatchList=new TreeMap<Integer,ArrayList<String>>();
+		Map.Entry entry;
+		//initialize matched men treeMap
+		while(iterator.hasNext())
+		{
+			entry=(Map.Entry) iterator.next();
+			String manName=entry.getKey();
+			String manAnswers=entry.getValue();
+			int lcsLength=findLcsLength(manAnswers,womanAnswers);
+			ArrayList<String> men;
+			if(menMatchList.containsKey(lcsLength))
+			{
+				men=menMatchList.get(lcsLength);
+			}
+			else
+			{
+				men=new ArrayList<String>();
+			}
+			men.add(manName);
+			menMatchList.put(lcsLength,men);
+			
+		}
+		
+		// pick the best match from the womanMatchList
+		
+		entry=menMatchList.firstEntry();
+		ArrayList<String> menList=entry.getValue();
+		Arrays.sort(menList);
+		
+		//remove the most matching man from the main 
+		treeMapMen.remove(menList{0]);
+			
+		return menList[0];
+			
+		
+	}
+	
+	//find length of longest match
+	public int findLcsLength(String manAnswers,String womanAnswers)
+	{
+		int count=0;
+		char[] charArr1=manAnswers.toCharArray();
+		char[] charArr2=womanAnswers.toCharArray();
+		for(int i=0;i<manAnswers.length;i++)
+		{
+			if(charArr1[i]==charArr2[i])
+				count++;
+		}
+		return count;
+	}
+	
+	
+}

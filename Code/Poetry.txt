@@ -1,0 +1,35 @@
+public class Poetry
+{
+public String rhymeScheme(String[] poem)
+{
+ StringBuffer sb=new StringBuffer();
+ String currSubstr="";
+ String prevSubstr="";
+ int startChar=97;
+ HashTable<Character,Character> table=new HashTable<Character,Character>();
+ ht.put(new Character('a'),new Character('a'));
+ ht.put(new Character('e'),new Character('e'));
+ ht.put(new Character('i'),new Character('i'));
+ ht.put(new Character('o'),new Character('o'));
+ ht.put(new Character('u'),new Character('u'));
+ for(String str:poem)
+ {
+  String[] line=str.split(" ");
+  String lastWord="";
+  if(line!=null)
+      {
+         lastword=line[line.length-1].trim();
+         currSubstr=findRhymeSubstring(lastword,ht);
+         if(currSubstr==prevSubstr) sb.append(Character.toString((char) startChar));
+         else sb.append(Character.toString((char) ++startChar));
+      }
+     else
+         {
+         
+         
+         }
+         
+ }
+}
+
+}
